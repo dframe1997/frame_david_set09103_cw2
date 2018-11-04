@@ -9,7 +9,7 @@ def enterQuiz():
     if request.method == 'POST':
         print request.form
         roomCode = request.form['roomCode']
-        if roomCode == '1657':
+        if roomCode in roomList:
             #https://stackoverflow.com/questions/17057191/redirect-while-passing-arguments
             return redirect(url_for('.quiz', roomCode=roomCode))
     return render_template('enter.html')
@@ -26,6 +26,8 @@ def host():
 @app.route('/lobby')
 def lobby():
     roomCode = request.args['roomCode']
+    if roomCode not in roomList:
+        roomList.append(roomCode)
     return render_template('lobby.html', roomCode=roomCode)
 
 @app.route('/quiz')
