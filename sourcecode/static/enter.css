@@ -1,0 +1,40 @@
+body{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-family: nunito;
+  margin: 0;
+  color: white;
+  padding: 10px;
+  background: #333333;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+}
+
+label{
+  font-size: 50px;
+}
+
+h1{
+  font-size: 80px;
+}
+input{
+  border: 0;
+  border-radius: 15vw;
+  margin: 20px;
+  padding: 10px;
+  font-size: 60px;
+  font-family: nunito;
+  margin-right: 5vw;
+  margin-left: 5vw;
+  height: 15vw;
+}
+
+input#submit{
+  background: linear-gradient(to bottom right, #0B6CEB, #12DEDE);
+  color: white;
+  margin: 10vw;
+}

@@ -1,0 +1,12 @@
+<!-- http://flask.pocoo.org/docs/0.12/patterns/flashing/ -->
+{%block body%}{% endblock %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class=flashes>
+    {% for message in messages %}
+      <label>{{message}}</label>
+    {%endfor%}
+    </ul>
+  {%endif%}
+{% endwith %}
+

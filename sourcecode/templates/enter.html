@@ -1,5 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="./static/enter.css" type="text/css">
 <h1>Enter room code</h1>
 <form method="post" name="form" action="">
+    <label>Room Code</label>
     <input name="roomCode" type="text" id="roomCode" required/>
+    <label>Username</label>
+    <input name="username" type="text" id="username" required/>
     <input type="submit" name="submit" id="submit"/>
 </form>
+{%endblock%}

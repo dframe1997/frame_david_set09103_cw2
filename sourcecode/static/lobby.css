@@ -2,16 +2,44 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .roomInfo{
   color: white;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: -85px;
+  margin-bottom: 0px;
   text-align: center;
   background: linear-gradient(to bottom right, #DD1313, #EB0BA0);
   padding-left: 35px;
   padding-right: 35px;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
+  transition: ease-in-out all 0.2s;
+}
+
+.roomInfo:hover{
+  margin: 0;
+}
+
+.upperSection{
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.upperSection a{
+  border: 0;
+  background: transparent;
+  color: white;
+  padding: 5px;
+  font-family: nunito;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 h4, h2{

@@ -1,13 +1,33 @@
 <link rel="stylesheet" type="text/css" href="/static/lobby.css">
-
+{% if update == 'true' %}
+    <meta http-equiv="refresh" content="5">
+{% endif %}
 <body>
     <div class="centeredContainer">
         <div class="roomInfo">
-            <h4>Room Code:</h4>
-            <h2>{{ roomCode }}</h2>
+            <div class="upperSection">
+                <a href="./clearusers?roomCode={{room.roomCode}}">Remove all users</a>
+                <a href="./removeroom?roomCode={{room.roomCode}}">Close room</a>
+            </div>
+            <div class="bottomSection">
+                <h4>Room Code:</h4>
+                <h2>{{ room.roomCode }}</h2>
+            </div>
         </div>
     </div>
     <div class="centeredContainer">
-        <button class="readyButton">Ready to go!</button>
+        <a class="readyButton">Ready to go!</a>
+    </div>
+    <div class="centeredContainer">
+        {% for user in room.users %}
+            <h4>{{ user }}</h4>
+        {% endfor %}
     </div>
 </body>
+
+<script>
+    readyButton = document.getElementsByClassName("readyButton");
+    readyButton[0].setAttribute('href', './quiz-display?roomCode=' + "{{ room.roomCode }}");
+</script>
+
+
