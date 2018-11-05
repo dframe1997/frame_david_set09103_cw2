@@ -1,0 +1,36 @@
+body{
+  display: flex;
+  flex-direction: column;
+  font-family: nunito;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+  background: #333333;
+}
+
+h4{
+  margin: 0;
+}
+
+h6{
+  margin: 1vh;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+}
+
+input{
+  border-radius: 50px;
+  border: 0;
+  font-size: 15px;
+  padding: 10px 15px 10px 15px;
+  margin: 10px;
+}
+
+input#submit{
+  background: linear-gradient(to bottom right, #0B6CEB, #12DEDE);
+  color: white;
+  cursor: pointer;
+}

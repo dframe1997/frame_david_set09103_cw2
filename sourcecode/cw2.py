@@ -29,14 +29,15 @@ def admin():
     if request.method =='POST':
         print request.form
         roomCode = request.form['roomCode']
+        if not any(room for room in roomList if room.roomCode == roomCode):
+            roomList.append(Room(roomCode))       
         return redirect(url_for('.lobby', roomCode=roomCode))
     return render_template('adminDash.html')
 
 @app.route('/lobby')
 def lobby():
-    roomCode = request.args['roomCode']
-    roomList.append(Room(roomCode))
-    return render_template('lobby.html', room=next((room for room in roomList if room.roomCode == roomCode), None), update='true')
+    roomCode = request.args['roomCode'] 
+    return render_template('lobby.html', room=next((room for room in roomList if room.roomCode == roomCode), None), update='false')
 
 @app.route('/quiz-input')
 #This is the mobile view of the questions
@@ -74,3 +75,10 @@ def removeRoom():
         del roomList[roomIndex]
     return redirect(url_for('.admin'))
     
+@app.route('/debug')
+def debug():
+    tempList = []
+    for room in roomList: 
+        tempList.append(json.dumps(room.__dict__))
+    return "<label>" + json.dumps(tempList) + "</label>"
+

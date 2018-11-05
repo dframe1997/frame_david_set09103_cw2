@@ -1,3 +1,5 @@
+{% extends "layout.html" %}
+{% block body %}
 <link rel="stylesheet" type="text/css" href="/static/lobby.css">
 {% if update == 'true' %}
     <meta http-equiv="refresh" content="5">
@@ -6,6 +8,7 @@
     <div class="centeredContainer">
         <div class="roomInfo">
             <div class="upperSection">
+                <a href="./admin">Back to admin screen</a>
                 <a href="./clearusers?roomCode={{room.roomCode}}">Remove all users</a>
                 <a href="./removeroom?roomCode={{room.roomCode}}">Close room</a>
             </div>
@@ -30,4 +33,4 @@
     readyButton[0].setAttribute('href', './quiz-display?roomCode=' + "{{ room.roomCode }}");
 </script>
 
-
+{%endblock%}

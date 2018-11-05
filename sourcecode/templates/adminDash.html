@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="./static/adminDash.css" type="text/css">
 <h1>Admin</h1>
 <h4>Load Quiz</h4>
 <h6>Load a quiz by entering it's room code</h6>
@@ -5,3 +8,6 @@
     <input type="text" name="roomCode" id="roomCode">
     <input type="submit" name="submit" id="submit"/>
 </form>
+
+{{ roomList }}
+{%endblock%}
