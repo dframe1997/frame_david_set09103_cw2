@@ -1,4 +1,23 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="./static/quiz.css" type="text/css">
 {% extends "layout.html" %}
 {% block body %}
-<h1>Room {{ room }}</h1>
+<h3>Question {{ room.currentQuestion }}</h3>
+{% if view == 'desktop' %}
+  <a href="./admin" class="fas fa-times quizExit"></a>
+{% endif %}
+<h1>{{ room.questions[room.currentQuestion].questionText }}</h1>
+<div class="answers">
+  {% for answer in room.questions[room.currentQuestion].answers %}
+    <a href='./nextquestion?roomCode={{room.roomCode}}&user={{user}}&answer={{loop.index0}}' class="answer">{{ answer }}</a>
+    <!-- {% if room.questions[room.currentQuestion].answers.index(answer) == room.questions[room.currentQuestion].correctAnswer %}
+      <label>(Correct)</label>
+    {% endif %} -->
+  {% endfor %}
+</div>
+
 {% endblock %}

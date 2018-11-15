@@ -19,18 +19,13 @@
         </div>
     </div>
     <div class="centeredContainer">
-        <a class="readyButton">Ready to go!</a>
+        <a href="./quiz?roomCode={{ room.roomCode }}&user=admin" class="readyButton">Ready to go!</a>
     </div>
     <div class="centeredContainer">
         {% for user in room.users %}
-            <h4>{{ user }}</h4>
+            <h4>{{ user.name }}</h4>
         {% endfor %}
     </div>
 </body>
-
-<script>
-    readyButton = document.getElementsByClassName("readyButton");
-    readyButton[0].setAttribute('href', './quiz-display?roomCode=' + "{{ room.roomCode }}");
-</script>
 
 {%endblock%}

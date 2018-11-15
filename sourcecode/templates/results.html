@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="./static/results.css">
+<h1>Results</h1>
+<div class="resultsList">
+  {% for result in room.results %}
+    <div class="result">
+      <div class="numberContainer">
+        <label class="resultNumber">{{loop.index}}</label>
+        <label class="resultNumberTrail">{% if loop.index % 10 == 1 and loop.index != 11 %}st{% elif loop.index % 10 == 2 and loop.index != 22 %}nd{% elif loop.index % 10 == 3 and loop.index != 13 %}rd{% else %}th{% endif %}
+        </label>
+      </div>
+      {% if loop.index <= 3 %}<div class="verticalSeperator"></div>{% endif %}
+      
+      <label class="resultName">{{ result }}
+      
+      {% if loop.index == 1 %}
+         <i class="fas fa-crown crown"></i>
+      {% endif %}
+      <label>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

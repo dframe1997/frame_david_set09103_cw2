@@ -1,0 +1,46 @@
+body{
+  background: #333333;
+  color: white;
+}
+
+.resultsList{
+  display: flex;
+  flex-direction: column;
+}
+
+.result:nth-child(-n+3){
+  font-size: 2em;
+}
+
+.result:nth-child(-n+3) .resultNumber{
+  font-size: 1.4em;
+}
+
+.result{
+  display: flex;
+  align-items: flex-end;
+  font-size: 1.2em;
+}
+
+.verticalSeperator{
+  background: white;
+  height: 50px;
+  width: 5px;
+  border-radius: 50px;
+  margin: 0 10px 0 10px;
+  align-self: center;
+}
+
+.numberContainer{
+  width: 72px;
+  display: flex;
+}
+
+.crown{
+  color: gold;
+  font-size: 0.8em;
+}
+
+h1{
+  text-align: center;
+}
