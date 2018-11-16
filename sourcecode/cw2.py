@@ -26,7 +26,7 @@ class User:
         self.score = 0
 
 questionRoom = Room("questionRoom")
-question1 = Question("What is 1 + 1?", ["5", "4", "2", "6"], 2)
+question1 = Question("What is 1 + 1?", ["5", "4", "2", "6", "5", "3", "7", "7", "9", "10", "11", "12"], 2)
 question2 = Question("What is the answer?", ["This one", "Definitley this one", "This one for sure", "Not this one"], 0)
 questionRoom.questions.append(question1)
 questionRoom.questions.append(question2)
@@ -102,7 +102,7 @@ def lobby():
     for question in roomList[roomIndex].questions:
         question.responders = []
 
-    return render_template('lobby.html', room=next((room for room in roomList if room.roomCode == roomCode), None), update='false')
+    return render_template('lobby.html', room=next((room for room in roomList if room.roomCode == roomCode), None), update='true')
 
 @app.route('/quiz')
 #This is the mobile view of the questions
@@ -195,6 +195,16 @@ def nextquestion():
               return redirect(url_for('.results', roomCode=roomCode))
        else:
            return redirect(url_for('.waiting', roomCode=roomCode, username=user, waitingLocation="question", initialIndex=roomList[roomIndex].currentQuestion))
+
+
+@app.route('/refreshDisplay')
+def refreshDisplay():
+    roomCode = request.args['roomCode']
+    user = request.args['user']
+    room = next((room for room in roomList if room.roomCode == roomCode), None)
+    if room.status == "results":
+        return redirect(url_for('.results', roomCode=roomCode))
+    return redirect(url_for('.quiz', roomCode=roomCode, user=user))
    
 @app.route('/results')
 def results():

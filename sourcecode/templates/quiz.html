@@ -6,6 +6,11 @@
 <link rel="stylesheet" href="./static/quiz.css" type="text/css">
 {% extends "layout.html" %}
 {% block body %}
+
+{% if user == "admin" %}
+    <meta http-equiv="refresh" content="1; url=/refreshDisplay?roomCode={{room.roomCode}}&user={{user}}">
+{% endif %}
+
 <h3>Question {{ room.currentQuestion }}</h3>
 {% if view == 'desktop' %}
   <a href="./admin" class="fas fa-times quizExit"></a>

@@ -7,35 +7,51 @@ body{
 .answers{
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .answer{
   flex-grow: 1;
-  padding: 5%;
-  margin: 1%;
-  border-radius: 50vw;
+  padding: 5vh;
+  margin: 1vh;
+  border-radius: 5vh;
   background: linear-gradient(to bottom right, #0B6CEB, #12DEDE);
-  font-size: 1.5em;
+  font-size: 5vh;
   color: white;
   text-decoration: none;
 }
-/*
-.answer:nth-child(4n+1){
-  background: linear-gradient(to bottom right, #DD1313, #EB0BA0);
+
+.answer:nth-child(8n+1){
+  background: linear-gradient(to bottom right, #FF0000, #FF00D4);
 }
 
-.answer:nth-child(4n+2){
-  background: linear-gradient(to bottom right, #0B6CEB, #12DEDE);
+.answer:nth-child(8n+2){
+  background: linear-gradient(to bottom right, #FF00D4, #8500FF);
 }
 
-.answer:nth-child(4n+3){
-  background: linear-gradient(to bottom right, #eb0bda, #7d12de);
+.answer:nth-child(8n+3){
+  background: linear-gradient(to bottom right, #8500FF, #0E14E0);
 }
 
-.answer:nth-child(4n+4){
-  background: linear-gradient(to bottom right, #eb930b, #de1212);
+.answer:nth-child(8n+4){
+  background: linear-gradient(to bottom right, #0E14E0, #00ADFF);
 }
-*/
+
+.answer:nth-child(8n+5){
+  background: linear-gradient(to bottom right, #00ADFF, #00FF7E);
+}
+
+.answer:nth-child(8n+6){
+  background: linear-gradient(to bottom right, #00FF7E, #FBFF00);
+}
+
+.answer:nth-child(8n+7){
+  background: linear-gradient(to bottom right, #FBFF00, #FF6A00);
+}
+
+.answer:nth-child(8n+8){
+  background: linear-gradient(to bottom right, #FF6A00, #FF0000);
+}
 
 .quizExit{
   position: fixed;
@@ -51,4 +67,19 @@ body{
   cursor: pointer;
   color: white;
   text-decoration: none;
+}
+
+h3{
+  font-size: 4vh;
+}
+
+h1{
+  font-size: 7vh;
+  margin-top: 1vh;
+}
+
+@media(orientation: portrait){
+  .answers{
+    flex-direction: column;
+  }
 }
