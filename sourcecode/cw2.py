@@ -72,9 +72,6 @@ with open('roomData.pkl', 'rb') as data:
 
 #roomList.append(questionRoom)
 
-#with open('roomData.pkl', 'wb') as data:
-#    pickle.dump(roomList, data)
-
 print(roomList)
 
 questionComplete = 'false'
@@ -133,15 +130,17 @@ def admin():
         print request.form
         roomCode = request.form['roomCode']
         if not any(room for room in roomList if room.roomCode == roomCode):
-            roomList.append(Room(roomCode))       
-        return redirect(url_for('.lobby', roomCode=roomCode))
+            roomList.append(Room(roomCode, [], [], 0, "offline", []))       
+        roomIndex = roomList.index(next((room for room in roomList if room.roomCode == roomCode), None))
+        return redirect(url_for('.questionEdit', roomIndex=roomIndex, roomCode=roomCode))
     return render_template('adminDash.html')
 
 @app.route('/questionedit', methods=['POST', 'GET'])
-def questionedit():
+def questionEdit():
     if request.method == 'POST':
         print request.form
         roomIndex = int(request.args['roomIndex'])
+        roomCode = request.args['roomCode']
         requestType = request.form['requestType']
         
         if requestType == "addAnswer":
@@ -151,15 +150,30 @@ def questionedit():
         elif requestType == "deleteAnswer":
             questionID = int(request.form['questionID'])
             answerID = int(request.form['answerID'])
+            correctAnswer = int(roomList[roomIndex].questions[questionID].correctAnswer)
+            if answerID < correctAnswer:
+               roomList[roomIndex].questions[questionID].correctAnswer = correctAnswer - 1
             del roomList[roomIndex].questions[questionID].answers[answerID]
-        else:
+        elif requestType == "setCorrectAnswer":
+            questionID = int(request.form['questionID'])
+            answerID = int(request.form['answerID'])
+            roomList[roomIndex].questions[questionID].correctAnswer = answerID
+        elif requestType == "deleteQuestion":
+            questionID = int(request.form['questionID'])
+            del roomList[roomIndex].questions[questionID]   
+        elif requestType == "addQuestion":
             questionText = request.form['questionText']
             answersString = str(request.form['answers'])
             correctAnswer = int(request.form['correctAnswer'])
             answers = answersString.split(";")
-        
+            if correctAnswer > len(answers)-1 or correctAnswer < 0:
+                correctAnswer = 0
+             
             roomList[roomIndex].questions.append(Question(questionText, answers, correctAnswer, []));
-        return render_template('questionedit.html', room=roomList[roomIndex])
+        else:
+            abort(404)
+        saveRoomList()
+        return redirect(url_for('.questionEdit', roomIndex=roomIndex, roomCode=roomCode))
     roomIndex = int(request.args['roomIndex'])
     return render_template('questionedit.html', room=roomList[roomIndex])
 
@@ -283,8 +297,9 @@ def results():
     room = next((room for room in roomList if room.roomCode == roomCode), None)
     return render_template("results.html", room=room)
 
-
-
+def saveRoomList():
+    with open('roomData.pkl', 'wb') as data:
+        pickle.dump(roomList, data)
 
 def calculateResults(users):
     listOfResults = []

@@ -1,10 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" type="text/css" href="/static/questionedit.css">
 <h1>Questions</h1>
 <div>
 {% for question in room.questions %}
     <div class="question">  
         <h5>{{question.questionText}}</h5>
+        <form action="" method="post" name="form">
+            <input type="hidden" id="requestType" name="requestType" value="deleteQuestion">
+            <input type="hidden" id="questionID" name="questionID" value="{{loop.index0}}">
+            <input type="submit" name="submit" value="Delete question">
+        </form>
         {% set outer_loop = loop %}
         {% for answer in question.answers %}
+        <div class="answer">
             <label>{{answer}}</label>
             {% if question.correctAnswer == loop.index0 %}
                 <label>(Correct)</label>
@@ -26,12 +35,13 @@
          <form action="" method="post" name="form">
              <div class="formItem">
                  <label for="answer">Add a new answer</label>
-                 <input type=text name="answer" id="questionText" required/>
-                 <input type="hidden" id="requestType" name="requestType" value="{{loop.index0}}">
+                 <input type=text name="answer" id="answer" required/>
+                 <input type="hidden" name="questionID" id="questionID" value="{{loop.index0}}">
+                 <input type="hidden" id="requestType" name="requestType" value="addAnswer">
                  <input type="submit" name="submit">
              </div>    
          </form>
-    <div>
+    </div>
 {% endfor %}
 </div>
 
@@ -44,13 +54,20 @@
  
     <div class="formItem">
          <label for="answers">Answers (Separate each answer with a semicolon): </label>
-         <input type=text name="answers" id="answers">
+         <input type=text name="answers" id="answers" required/>
     </div>
     
     <div class="formItem">
          <label for="correctAnswer">Correct Answer: </label>
-         <input type=text name="correctAnswer" id="correctAnswer">
+         <input type=text name="correctAnswer" id="correctAnswer" required/>
     </div>   
-    <input type="hidden" id="requestType" name="requestType" value="new"> 
+    <input type="hidden" id="requestType" name="requestType" value="addQuestion"> 
     <input type="submit" name="submit" id="submit">
 </form>
+
+{% if room.questions|length > 0 %}
+    <a href="./lobby?roomCode={{room.roomCode}}">Enter Lobby</a>
+{% endif %}
+<a href="./admin">Back to admin screen</a>
+
+{% endblock %}
