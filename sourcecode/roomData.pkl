@@ -1,0 +1,176 @@
+(lp0
+(icw2
+Room
+p1
+(dp2
+S'status'
+p3
+S'offline'
+p4
+sS'users'
+p5
+(lp6
+sS'currentQuestion'
+p7
+I0
+sS'results'
+p8
+(lp9
+sS'roomCode'
+p10
+S'questionRoom'
+p11
+sS'questions'
+p12
+(lp13
+(icw2
+Question
+p14
+(dp15
+S'responders'
+p16
+(lp17
+sS'correctAnswer'
+p18
+I5
+sS'answers'
+p19
+(lp20
+S'20-20+10+5+3+1+1+20'
+p21
+aS'(Twenty times three) minus fourty'
+p22
+aS'thirty minus ten'
+p23
+aS'-20+twenty five-5'
+p24
+aS'20'
+p25
+aS'3 times (5 plus 5)'
+p26
+aS'(2 plus zero) times ten'
+p27
+aS'(three times five) plus five'
+p28
+asS'questionText'
+p29
+S'What one does NOT equal 20?'
+p30
+sba(icw2
+Question
+p31
+(dp32
+g16
+(lp33
+sg18
+I0
+sg19
+(lp34
+S'This one'
+p35
+aS'Defenetley this one'
+p36
+aS'This one for suar'
+p37
+aS'Not this one'
+p38
+asg29
+S'What is the correct one?'
+p39
+sba(icw2
+Question
+p40
+(dp41
+g16
+(lp42
+sg18
+I0
+sg19
+(lp43
+S'quaza'
+p44
+aS'kachu'
+p45
+aS'plup'
+p46
+aS'cineroar'
+p47
+aS'vesaur'
+p48
+asg29
+S'I say Rey, you say'
+p49
+sba(icw2
+Question
+p50
+(dp51
+g16
+(lp52
+sg18
+I1
+sg19
+(lp53
+S'crowd-pleaser'
+p54
+aS'clavier'
+p55
+aS'frankfurter'
+p56
+aS'weenie'
+p57
+asg29
+S"Which isn't a synonym for hot dog?"
+p58
+sba(icw2
+Question
+p59
+(dp60
+g16
+(lp61
+sg18
+I3
+sg19
+(lp62
+S'Piano'
+p63
+aS'Saxophone'
+p64
+aS'Melodica'
+p65
+aS'Quire'
+p66
+aS'Flute'
+p67
+aS'Steelpan'
+p68
+aS'Flumpet'
+p69
+asg29
+S"Which isn't a musical instrument"
+p70
+sba(icw2
+Question
+p71
+(dp72
+g16
+(lp73
+sg18
+I5
+sg19
+(lp74
+S'Wine'
+p75
+aS'Gummy Bears'
+p76
+aS'Worcestershire sauce'
+p77
+aS'Eggs'
+p78
+aS'Fresh pasta'
+p79
+aS'Houmous'
+p80
+asg29
+S'Vegan'
+p81
+sbasba.

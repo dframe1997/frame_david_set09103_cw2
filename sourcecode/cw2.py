@@ -1,36 +1,81 @@
 from flask import Flask, render_template, url_for, request, redirect, abort, json, flash
-import os, time
+import os, time, pickle
 app = Flask(__name__)
 app.secret_key = 'sandwich'
 roomList=[]
 timer = 30;
-class Room:
-    def __init__(self, roomCode):
-        self.roomCode = roomCode
-        self.users = []
-        self.questions = []
-        self.currentQuestion = 0
-        self.status = 'offline'
-        self.results = []
 
 class Question:
-    def __init__(self, questionText, answers, correctAnswer):
+    def __init__(self, questionText, answers, correctAnswer, responders):
         self.questionText = questionText
         self.answers = answers
         self.correctAnswer = correctAnswer
-        self.responders = []
+        self.responders = responders
 
 class User:
-    def __init__(self, name):
+    def __init__(self, name, score):
         self.name = name
-        self.score = 0
+        self.score = score
 
-questionRoom = Room("questionRoom")
-question1 = Question("What is 1 + 1?", ["5", "4", "2", "6", "5", "3", "7", "7", "9", "10", "11", "12"], 2)
-question2 = Question("What is the answer?", ["This one", "Definitley this one", "This one for sure", "Not this one"], 0)
-questionRoom.questions.append(question1)
-questionRoom.questions.append(question2)
-roomList.append(questionRoom)
+
+
+class Room():  
+    def __init__(self, roomCode, users, questions, currentQuestion, status, results):
+        self.roomCode = roomCode
+        self.users = users
+        self.questions = questions
+        self.currentQuestion = currentQuestion
+        self.status = status
+        self.results = results
+
+
+#def loadRooms():
+ #   newRoomList = []
+  #  for room in jsondata:
+   #    userList = []
+    #   questionList = []
+     #  for i in xrange(len(room['users'])):
+      #     userList.append(User(room['users'][i]['name'], int(room['users'][i]['score'])))
+       
+      # for question in room['questions']:
+       #    answerList = []
+        #   responderList = []
+         #  for answer in question['answers']:
+          #     answerList.append(answer)
+          # for responder in question['responders']:
+           #    responderList.append(responder)
+          # questionList.append(question['questionText'], answerList, question['correctAnswer'], responderList)
+      # newRoomList.append(Room(room['roomCode'], userList, questionList, room['currentQuestion'], room['status'], room['results']))
+   # return newRoomList
+
+#newRoomList = loadRooms()
+
+#for room in newRoomList:
+ #  roomList.append(room)
+
+with open('roomData.pkl', 'rb') as data:
+    roomList = pickle.load(data)
+
+#questionRoom = Room("questionRoom",[],[],0,"offline",[])
+#question1 = Question("What one does NOT equal 20?", ["20-20+10+5+3+1+1+20", "(Twenty times three) minus fourty", "thirty minus ten", "-20+twenty five-5", "20", "3 times (5 plus 5)", "(2 plus zero) times ten", "(three times five) plus five"], 5, [])
+#question2 = Question("What is the correct one?", ["This one", "Defenetley this one", "This one for suar", "Not this one"], 0, [])
+#question3 = Question("I say Rey, you say", ["quaza", "kachu", "plup", "cineroar", "vesaur"], 0, [])
+#question4 = Question("Which isn't a synonym for hot dog?", ["crowd-pleaser", "clavier", "frankfurter", "weenie"], 1, [])
+#question5 = Question("Which isn't a musical instrument", ["Piano", "Saxophone", "Melodica", "Quire", "Flute", "Steelpan", "Flumpet"], 3, [])
+#question6 = Question("Vegan", ["Wine", "Gummy Bears", "Worcestershire sauce", "Eggs", "Fresh pasta", "Houmous"], 5, [])
+#questionRoom.questions.append(question1)
+#questionRoom.questions.append(question2)
+#questionRoom.questions.append(question3)
+#questionRoom.questions.append(question4)
+#questionRoom.questions.append(question5)
+#questionRoom.questions.append(question6)
+
+#roomList.append(questionRoom)
+
+#with open('roomData.pkl', 'wb') as data:
+#    pickle.dump(roomList, data)
+
+print(roomList)
 
 questionComplete = 'false'
 
@@ -91,6 +136,32 @@ def admin():
             roomList.append(Room(roomCode))       
         return redirect(url_for('.lobby', roomCode=roomCode))
     return render_template('adminDash.html')
+
+@app.route('/questionedit', methods=['POST', 'GET'])
+def questionedit():
+    if request.method == 'POST':
+        print request.form
+        roomIndex = int(request.args['roomIndex'])
+        requestType = request.form['requestType']
+        
+        if requestType == "addAnswer":
+            questionID = int(request.form['questionID'])
+            answer = request.form['answer']
+            roomList[roomIndex].questions[questionID].answers.append(answer)
+        elif requestType == "deleteAnswer":
+            questionID = int(request.form['questionID'])
+            answerID = int(request.form['answerID'])
+            del roomList[roomIndex].questions[questionID].answers[answerID]
+        else:
+            questionText = request.form['questionText']
+            answersString = str(request.form['answers'])
+            correctAnswer = int(request.form['correctAnswer'])
+            answers = answersString.split(";")
+        
+            roomList[roomIndex].questions.append(Question(questionText, answers, correctAnswer, []));
+        return render_template('questionedit.html', room=roomList[roomIndex])
+    roomIndex = int(request.args['roomIndex'])
+    return render_template('questionedit.html', room=roomList[roomIndex])
 
 @app.route('/lobby')
 def lobby():

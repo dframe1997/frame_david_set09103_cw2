@@ -1,0 +1,1 @@
+{"rooms":[{"roomCode": "testJSON", "users": ["David", "Sarah"], "questions": [{"questionText": "What does NOT equal 20?", "answers": ["20-0", "4"], "correctAnswer": "0", "responders": []}], "currentQuestion": "0", "status": "online", "results": []}]}

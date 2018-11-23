@@ -1,0 +1,56 @@
+<h1>Questions</h1>
+<div>
+{% for question in room.questions %}
+    <div class="question">  
+        <h5>{{question.questionText}}</h5>
+        {% set outer_loop = loop %}
+        {% for answer in question.answers %}
+            <label>{{answer}}</label>
+            {% if question.correctAnswer == loop.index0 %}
+                <label>(Correct)</label>
+            {% else %}
+                <form action="" method="post" name="form">
+                    <input type="hidden" id="requestType" name="requestType" value="deleteAnswer">
+                    <input type="hidden" id="answerID" name="answerID" value="{{loop.index0}}">
+                    <input type="hidden" id="questionID" name="questionID" value="{{outer_loop.index0}}">
+                    <input type="submit" name="submit" value="Delete answer">
+                </form>
+                <form action="" method="post" name="form">
+                    <input type="hidden" id="requestType" name="requestType" value="setCorrectAnswer">
+                    <input type="hidden" id="answerID" name="answerID" value="{{loop.index0}}">
+                    <input type="hidden" id="questionID" name="questionID" value="{{outer_loop.index0}}">
+                    <input type="submit" name="submit" value="Set correct answer">
+                </form>
+            {% endif %}
+        {% endfor %}
+         <form action="" method="post" name="form">
+             <div class="formItem">
+                 <label for="answer">Add a new answer</label>
+                 <input type=text name="answer" id="questionText" required/>
+                 <input type="hidden" id="requestType" name="requestType" value="{{loop.index0}}">
+                 <input type="submit" name="submit">
+             </div>    
+         </form>
+    <div>
+{% endfor %}
+</div>
+
+<h2>Add a new question</h2>
+<form action="" method="post" name="form">
+    <div class="formItem">
+         <label for="questionText">Question Text: </label>
+         <input type=text name="questionText" id="questionText" required/>
+    </div>    
+ 
+    <div class="formItem">
+         <label for="answers">Answers (Separate each answer with a semicolon): </label>
+         <input type=text name="answers" id="answers">
+    </div>
+    
+    <div class="formItem">
+         <label for="correctAnswer">Correct Answer: </label>
+         <input type=text name="correctAnswer" id="correctAnswer">
+    </div>   
+    <input type="hidden" id="requestType" name="requestType" value="new"> 
+    <input type="submit" name="submit" id="submit">
+</form>

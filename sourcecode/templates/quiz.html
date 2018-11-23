@@ -11,7 +11,7 @@
     <meta http-equiv="refresh" content="1; url=/refreshDisplay?roomCode={{room.roomCode}}&user={{user}}">
 {% endif %}
 
-<h3>Question {{ room.currentQuestion }}</h3>
+<h3>Question {{ room.currentQuestion+1 }}</h3>
 {% if view == 'desktop' %}
   <a href="./admin" class="fas fa-times quizExit"></a>
 {% endif %}
