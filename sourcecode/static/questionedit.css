@@ -1,7 +1,126 @@
 *{
   text-align: center;
+  color: #DEDEDE;
 }
 
 .answer{
-  display: block;
+  display: flex;
+  justify-content: space-between;
 }
+
+input{
+  display: inline;
+  border: 0;
+  background: #3B3B3B;
+  color: #BDBDBD;
+  border-radius: 50px;
+  text-align: left;
+  padding: 5px;
+  margin: 2px;
+}
+
+input:not(#answer){
+  cursor: pointer;
+}
+
+.question{
+  background: #434343;
+  border-radius: 2vw;
+  padding: 2vw;
+  margin: 1vw;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.questionHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h5{
+  display: inline;
+}
+
+h2{
+  margin: 0;
+}
+
+form{
+  display: inline;
+  margin: 0;
+}
+
+.addAnswer{
+  justify-self: flex-end;
+}
+
+.addAnswer form{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.submitNewAnswer input{
+  width: 225.29px;
+  text-align: center;
+}
+
+.questionWrapper{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  overflow-y: scroll;
+}
+
+.questionWrapper::before{
+  background-colour: red;
+  width: 10px;
+  height: 10px;
+}
+
+.twoColumn{
+  display: flex;
+  justify-content: space-around;
+  height: 89vh;
+}
+
+.addQuestion input#submit, .addQuestion a{
+  width: 100%;
+  font-size: 13.3333px;
+  text-align: center;
+  text-decoration: none;
+  background: #CCCCCC;
+  border-radius: 50px;
+  color: black;
+  display: block;
+  margin: 5px 0 5px 0;
+}
+
+.addQuestion{
+  margin: 0 1vw;
+  background: #434343;
+  border-radius: 2vw;
+  padding: 2vw;
+}
+
+::-webkit-scrollbar{
+  width: 10px;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-track {
+  background: #434343;
+  border-radius: 50px; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #BDBDBD; 
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999999;
+} 
