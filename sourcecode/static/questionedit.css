@@ -19,7 +19,7 @@ input{
   margin: 2px;
 }
 
-input:not(#answer){
+input[type="submit"]{
   cursor: pointer;
 }
 
@@ -72,7 +72,7 @@ form{
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .questionWrapper::before{
@@ -87,23 +87,34 @@ form{
   height: 89vh;
 }
 
-.addQuestion input#submit, .addQuestion a{
-  width: 100%;
+.addQuestion input#submit, .navOptions a{
   font-size: 13.3333px;
   text-align: center;
   text-decoration: none;
-  background: #CCCCCC;
+  background: #3B3B3B;
   border-radius: 50px;
-  color: black;
+  color: #BDBDBD;
   display: block;
   margin: 5px 0 5px 0;
 }
 
-.addQuestion{
+.addQuestion input#submit{
+  width: 100%;
+}
+
+.addQuestion, .navOptions{
   margin: 0 1vw;
   background: #434343;
   border-radius: 2vw;
-  padding: 2vw;
+  padding: 1vw;
+}
+
+.navOptions{
+  margin: 1vw;
+}
+
+.navOptions a{
+  padding: 3%;
 }
 
 ::-webkit-scrollbar{

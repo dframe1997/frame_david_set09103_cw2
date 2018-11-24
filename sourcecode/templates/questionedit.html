@@ -54,31 +54,34 @@
     </div>
 {% endfor %}
 </div>
-<div class="addQuestion">
-    <h2>Add a new question</h2>
-    <form action="" method="post" name="form">
-        <div class="formItem">
-             <label for="questionText">Question Text: </label>
-             <input type=text name="questionText" id="questionText" required/>
-        </div>    
+<div class="sideBar">
+    <div class="addQuestion">
+        <h2>Add a new question</h2>
+        <form action="" method="post" name="form">
+            <div class="formItem">
+                 <label for="questionText">Question Text: </label>
+                 <input type=text name="questionText" id="questionText" required/>
+            </div>    
  
-        <div class="formItem">
-             <label for="answers">Answers (Separate each answer with a semicolon): </label>
-             <input type=text name="answers" id="answers" required/>
-        </div>
+            <div class="formItem">
+                <label for="answers">Answers (Separate each answer with a semicolon): </label>
+                <input type=text name="answers" id="answers" required/>
+            </div>
     
-        <div class="formItem">
-             <label for="correctAnswer">Correct Answer: </label>
-             <input type=text name="correctAnswer" id="correctAnswer" required/>
-        </div>   
-        <input type="hidden" id="requestType" name="requestType" value="addQuestion"> 
-        <input type="submit" name="submit" id="submit">
-    </form>
-
-    {% if room.questions|length > 0 %}
-        <a href="./lobby?roomCode={{room.roomCode}}">Enter Lobby</a>
-    {% endif %}
-    <a href="./admin">Back to admin screen</a>
+            <div class="formItem">
+                 <label for="correctAnswer">Correct Answer: </label>
+                 <input type=text name="correctAnswer" id="correctAnswer" required/>
+            </div>   
+            <input type="hidden" id="requestType" name="requestType" value="addQuestion"> 
+            <input type="submit" name="submit" id="submit">
+        </form>
+    </div>
+    <div class="navOptions">
+        {% if room.questions|length > 0 %}
+            <a href="./lobby?roomCode={{room.roomCode}}">Enter Lobby</a>
+        {% endif %}
+        <a href="./admin">Back to admin screen</a>
+    </div>
 </div>
 </div>
 {% endblock %}
