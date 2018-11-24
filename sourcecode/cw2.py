@@ -26,6 +26,10 @@ class Room():
         self.status = status
         self.results = results
 
+with open('roomData.pkl', 'wb') as data:
+    pickle.dump(roomList, data)
+
+
 with open('roomData.pkl', 'rb') as data:
     roomList = pickle.load(data)
 
@@ -272,3 +276,4 @@ def calculateResults(users):
     for user in users:
         listOfResults.append(user.name)
         print(user.name)
+    return listOfResults
