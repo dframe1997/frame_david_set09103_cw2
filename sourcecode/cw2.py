@@ -35,12 +35,12 @@ questionComplete = 'false'
 
 @app.route('/', methods=['POST','GET'])
 def enterQuiz():
+    #Entry point into the quiz
     if request.method == 'POST':
         print request.form
         roomCode = request.form['roomCode']
         username = request.form['username']
         if any(room for room in roomList if room.roomCode == roomCode):
-            #https://stackoverflow.com/questions/17057191/redirect-while-passing-arguments
             return redirect(url_for('.waiting', roomCode=roomCode, username=username, waitingLocation="lobby"))
         else:
             flash('Room does not exist, please try again')
@@ -49,6 +49,7 @@ def enterQuiz():
 
 @app.route('/waiting')
 def waiting():
+    #Waiting area
     roomCode = request.args['roomCode']
     username = request.args['username']
     waitingLocation = request.args['waitingLocation']
@@ -94,6 +95,7 @@ def admin():
 
 @app.route('/questionedit', methods=['POST', 'GET'])
 def questionEdit():
+    #Edit the questions
     if request.method == 'POST':
         print request.form
         roomIndex = int(request.args['roomIndex'])
@@ -136,6 +138,7 @@ def questionEdit():
 
 @app.route('/lobby')
 def lobby():
+    #Lobby to hold players until the quiz starts
     roomCode = request.args['roomCode'] 
     roomIndex = next((room for room in roomList if room.roomCode == roomCode), None)
     roomIndex = roomList.index(roomIndex)
@@ -147,7 +150,7 @@ def lobby():
     return render_template('lobby.html', room=next((room for room in roomList if room.roomCode == roomCode), None), update='true')
 
 @app.route('/quiz')
-#This is the mobile view of the questions
+#This is the quiz itself
 def quiz():
     roomCode = request.args['roomCode']
     user = request.args['user']
@@ -160,15 +163,9 @@ def quiz():
             roomList[roomIndex].status = 'running'
     return render_template("quiz.html", room=next((room for room in roomList if room.roomCode == roomCode), None), user=user)
 
-#@app.route('/quiz-display')
-#This is the desktop view of the questions
-#def quizDisplay():
-#    #countdown()
-#    roomCode = request.args['roomCode']
-#    return render_template("quiz.html", room=next((room for room in roomList if room.roomCode == roomCode), None), view='desktop', user="admin")
-
 @app.route('/clearusers')
 def clearUsers():
+    #Removes all users from the room
     roomCode = request.args['roomCode']
     roomIndex = next((room for room in roomList if room.roomCode == roomCode), None)
 
@@ -179,6 +176,7 @@ def clearUsers():
 
 @app.route('/removeroom')
 def removeRoom():
+    #Deletes the room
     roomCode = request.args['roomCode']
     roomIndex = next((room for room in roomList if room.roomCode == roomCode), None)
     if roomIndex != None:
@@ -188,6 +186,7 @@ def removeRoom():
     
 @app.route('/debug')
 def debug():
+    #Shows roomList details for debug purposes
     output = "";
     for room in roomList: 
         output += "(" + room.roomCode + ";" + room.status + ")"
@@ -203,6 +202,7 @@ def debug():
 
 @app.route('/nextquestion')
 def nextquestion():
+    #Advance to the next question
     roomCode = request.args['roomCode']
     user = request.args["user"]
     
@@ -212,7 +212,7 @@ def nextquestion():
        if user != "admin":
          answer = request.args['answer']
          userIndex = roomList[roomIndex].users.index(next((u for u in roomList[roomIndex].users if u.name == user), None))
-         
+         #Increment user score if they answered the question correctly
          if answer == roomList[roomIndex].questions[roomList[roomIndex].currentQuestion].correctAnswer:
              roomList[roomIndex].users[userIndex].score = roomList[roomIndex].users[userIndex].score + 1
          
@@ -241,6 +241,7 @@ def nextquestion():
 
 @app.route('/refreshDisplay')
 def refreshDisplay():
+    #Refresh the host's display to see if the next question should be shown
     roomCode = request.args['roomCode']
     user = request.args['user']
     room = next((room for room in roomList if room.roomCode == roomCode), None)
@@ -250,20 +251,64 @@ def refreshDisplay():
    
 @app.route('/results')
 def results():
+    #Show the results screen
     roomCode = request.args['roomCode']
     room = next((room for room in roomList if room.roomCode == roomCode), None)
     return render_template("results.html", room=room)
 
 def saveRoomList():
+    #Save the roomList in a pickle file
     with open('roomData.pkl', 'wb') as data:
         pickle.dump(roomList, data)
 
 def calculateResults(users):
+    #Calculate the results
     listOfResults = []
     users.sort(key=lambda x: x.score)
     for user in users:
         listOfResults.append(user.name)
         print(user.name)
+from flask import Flask, render_template, url_for, request, redirect, abort, json, flash
+import os, time, pickle
+app = Flask(__name__)
+app.secret_key = 'sandwich'
+roomList=[]
+timer = 30;
+
+class Question:
+    def __init__(self, questionText, answers, correctAnswer, responders):
+        self.questionText = questionText
+        self.answers = answers
+        self.correctAnswer = correctAnswer
+        self.responders = responders
+
+class User:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+class Room():  
+    def __init__(self, roomCode, users, questions, currentQuestion, status, results):
+        self.roomCode = roomCode
+        self.users = users
+        self.questions = questions
+        self.currentQuestion = currentQuestion
+        self.status = status
+        self.results = results
+
+with open('roomData.pkl', 'rb') as data:
+    roomList = pickle.load(data)
+
+print(roomList)
+
+questionComplete = 'false'
+
+@app.route('/', methods=['POST','GET'])
+def enterQuiz():
+    #Entry point into the quiz
+    if request.method == 'POST':
+        print request.form
+        roomCode = request.form['roomCode']
 from flask import Flask, render_template, url_for, request, redirect, abort, json, flash
 import os, time, pickle
 app = Flask(__name__)
