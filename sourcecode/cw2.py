@@ -33,7 +33,11 @@ print(roomList)
 
 questionComplete = 'false'
 
-@app.route('/', methods=['POST','GET'])
+@app.route('/')
+def root():
+    return redirect(url_for('.enterQuiz'))
+
+@app.route('/enter', methods=['POST','GET'])
 def enterQuiz():
     #Entry point into the quiz
     if request.method == 'POST':
@@ -268,53 +272,3 @@ def calculateResults(users):
     for user in users:
         listOfResults.append(user.name)
         print(user.name)
-from flask import Flask, render_template, url_for, request, redirect, abort, json, flash
-import os, time, pickle
-app = Flask(__name__)
-app.secret_key = 'sandwich'
-roomList=[]
-timer = 30;
-
-class Question:
-    def __init__(self, questionText, answers, correctAnswer, responders):
-        self.questionText = questionText
-        self.answers = answers
-        self.correctAnswer = correctAnswer
-        self.responders = responders
-
-class User:
-    def __init__(self, name, score):
-        self.name = name
-        self.score = score
-
-class Room():  
-    def __init__(self, roomCode, users, questions, currentQuestion, status, results):
-        self.roomCode = roomCode
-        self.users = users
-        self.questions = questions
-        self.currentQuestion = currentQuestion
-        self.status = status
-        self.results = results
-
-with open('roomData.pkl', 'rb') as data:
-    roomList = pickle.load(data)
-
-print(roomList)
-
-questionComplete = 'false'
-
-@app.route('/', methods=['POST','GET'])
-def enterQuiz():
-    #Entry point into the quiz
-    if request.method == 'POST':
-        print request.form
-        roomCode = request.form['roomCode']
-from flask import Flask, render_template, url_for, request, redirect, abort, json, flash
-import os, time, pickle
-app = Flask(__name__)
-app.secret_key = 'sandwich'
-roomList=[]
-timer = 30;
-
-class Question:
-    def __init__(self, questionText, answers, correctAnswer, responders):
