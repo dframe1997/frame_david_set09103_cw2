@@ -17,8 +17,6 @@ class User:
         self.name = name
         self.score = score
 
-
-
 class Room():  
     def __init__(self, roomCode, users, questions, currentQuestion, status, results):
         self.roomCode = roomCode
@@ -28,49 +26,8 @@ class Room():
         self.status = status
         self.results = results
 
-
-#def loadRooms():
- #   newRoomList = []
-  #  for room in jsondata:
-   #    userList = []
-    #   questionList = []
-     #  for i in xrange(len(room['users'])):
-      #     userList.append(User(room['users'][i]['name'], int(room['users'][i]['score'])))
-       
-      # for question in room['questions']:
-       #    answerList = []
-        #   responderList = []
-         #  for answer in question['answers']:
-          #     answerList.append(answer)
-          # for responder in question['responders']:
-           #    responderList.append(responder)
-          # questionList.append(question['questionText'], answerList, question['correctAnswer'], responderList)
-      # newRoomList.append(Room(room['roomCode'], userList, questionList, room['currentQuestion'], room['status'], room['results']))
-   # return newRoomList
-
-#newRoomList = loadRooms()
-
-#for room in newRoomList:
- #  roomList.append(room)
-
 with open('roomData.pkl', 'rb') as data:
     roomList = pickle.load(data)
-
-#questionRoom = Room("questionRoom",[],[],0,"offline",[])
-#question1 = Question("What one does NOT equal 20?", ["20-20+10+5+3+1+1+20", "(Twenty times three) minus fourty", "thirty minus ten", "-20+twenty five-5", "20", "3 times (5 plus 5)", "(2 plus zero) times ten", "(three times five) plus five"], 5, [])
-#question2 = Question("What is the correct one?", ["This one", "Defenetley this one", "This one for suar", "Not this one"], 0, [])
-#question3 = Question("I say Rey, you say", ["quaza", "kachu", "plup", "cineroar", "vesaur"], 0, [])
-#question4 = Question("Which isn't a synonym for hot dog?", ["crowd-pleaser", "clavier", "frankfurter", "weenie"], 1, [])
-#question5 = Question("Which isn't a musical instrument", ["Piano", "Saxophone", "Melodica", "Quire", "Flute", "Steelpan", "Flumpet"], 3, [])
-#question6 = Question("Vegan", ["Wine", "Gummy Bears", "Worcestershire sauce", "Eggs", "Fresh pasta", "Houmous"], 5, [])
-#questionRoom.questions.append(question1)
-#questionRoom.questions.append(question2)
-#questionRoom.questions.append(question3)
-#questionRoom.questions.append(question4)
-#questionRoom.questions.append(question5)
-#questionRoom.questions.append(question6)
-
-#roomList.append(questionRoom)
 
 print(roomList)
 
@@ -103,7 +60,7 @@ def waiting():
    
     if waitingLocation == "lobby":
        if username != "admin" and not any(u.name == username for u in roomList[roomIndex].users):
-           roomList[roomIndex].users.append(User(username))
+           roomList[roomIndex].users.append(User(username, 0))
        
        if roomList[roomIndex].status == 'running':
           return redirect(url_for('.quiz', roomCode=roomCode, user=username))
@@ -307,5 +264,12 @@ def calculateResults(users):
     for user in users:
         listOfResults.append(user.name)
         print(user.name)
-        print(user.score)
-    return listOfResults
+from flask import Flask, render_template, url_for, request, redirect, abort, json, flash
+import os, time, pickle
+app = Flask(__name__)
+app.secret_key = 'sandwich'
+roomList=[]
+timer = 30;
+
+class Question:
+    def __init__(self, questionText, answers, correctAnswer, responders):
